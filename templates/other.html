@@ -16,6 +16,14 @@
     <![endif]-->
   </head>
   <body>
+    {% block header %}
+     <div class="container" style="background-color: black">
+      <img src="{{ url_for('static', filename='img/lita-logo.png') }}" style="float: left">
+       <h3 style="color: white">LITA Linked Data Webinar Series</h3>
+       <h2 style="color: white">Coding Experiments to transform MARC to Linked Data</h2>
+ 
+     </div>
+    {% endblock %}
     {% block main %}
     <h1>Webinar Other</h1>
 
