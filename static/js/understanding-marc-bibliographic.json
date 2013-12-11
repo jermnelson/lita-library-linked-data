@@ -9,7 +9,7 @@
     "bf:creationDate": "2013-10-10T10:15",
     "bf:descriptionConventions": "Using schema.org for descriptive metadata",
     "bf:descriptionLanguage": "English"
-  } 
+  }, 
   "author": [{
     "@type": "Person", 
     "bf:authorizedAccessPoint": "Furrie, Betty",
