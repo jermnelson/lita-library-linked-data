@@ -1,0 +1,66 @@
+<section>
+  <h1>Experiment #1</h1>
+  <p class="lead">Extracting Data from MARC21 and MARCXML</p>
+</section>
+<section>
+  <section>
+    <h2>MARC21</h2>
+    <p class="lead">MARC21 is a binary format developed by the Library of 
+     Congress. Dealing with the raw MARC21 can be challenging because MARC21
+     combines both fixed-length and variable length fields. Fortunately a 
+     number of open-source libraries exist for manipulating MARC21 records that
+     hides some of the complexity behind the format.
+     Today we will use Ed Summer's <a href="#">PyMARC</a> module for coding
+     experiment.
+    </p>
+  </section>
+  <section>
+   <h3>Task #1 -- Reading MARC21 file</h3>
+   <pre>
+    $ >> import pymarc
+    $ >> marc_reader = pymarc.MARCReader(open('E:\\training\\marc-sample.mrc'))
+    $ >> marc_records = []
+    $ >> for record in marc_reader:
+    $ >>     marc_records.append(record)
+   </pre>
+   <p class="lead">
+     Badge Questions:
+   </p>
+   <ol>
+     <li>How many MARC records are in the list <code>marc_records</code>?</li>
+     <li>Describe what happens when you execute the following code snippet:
+      <pre>
+       $ >> print(marc_records[1])
+      </pre>
+   </ol>
+  </section>
+  <section>
+   <h3>Task #2 -- Retrieving Data</h3>
+   <pre>
+     $ >> print(marc_records[0].title())
+     $ >> 'Pride and Prejudice'
+     $ >> print(marc_records[0]['245'])
+     $ >> '256 $a|Pride and Prejudice'
+   </pre>
+   <p class="lead">
+    Badge Questions:
+   </p>
+   <ol>
+    <li>What is the title for record 6 in <code>marc_records</code>?
+     (remember python lists start with a 0 index)</li>
+    <li>What is the isbn for record 6?</li>
+   </ol>
+  </section>
+</section>
+<section>
+  <section>
+    <h2>MARCXML</h2>
+    <p>MARCXML is the MARC21 format serialized as XML.</p>
+  </section>
+  <section>
+   <h3>Parsing MARCXML</h3>
+  </section>
+  <section>
+   <h3>Retrieving Data with XPath</h3>
+  </section>
+</section>
