@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/reveal.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/theme/default.css') }}" id="theme">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">	
+  <style>
+    .task {
+     background-color: rgb(111, 0, 17);
+   }
+
+   .template-example {
+     color: black !important;
+     text-align: left !important;
+   }
+
+
+  </style>
   <!-- If the query includes 'print-pdf', use the PDF print sheet -->
   <script>
     document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -24,6 +36,18 @@
 <body>
   {% block presentation %}
   {% endblock %} 
+  {% block footer %}
+  <div class="container share-reveal">
+   <div class="row">
+    <div class="col-md-6">
+     <div class="btn-group">
+      <button class="btn btn-sm btn-default" onclick="window.location.href='/resources'">Resources</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  {% endblock %}
+
   {#  <script src="{{ url_for('static', filename='js/head.min.js') }}"></script> #}
  <script src="{{ url_for('static', filename='js/reveal.min.js') }}"></script>
  <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>

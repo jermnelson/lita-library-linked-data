@@ -4,7 +4,13 @@
 <div class="container">
  <h1>Resources</h1> 
  <h2>Articles &amp; Books</h2>
+ <dl>
+  {% for website in resources.articles_books %}
+  {% include 'snippets/resource-brief.html' %}
+  {% endfor %}
+ </dl>
  <h2>Software</h2>
+ 
  <dl>
   <dt><a href="https://pypi.python.org/pypi/pymarc">PyMARC</a></dt>
   <dd>Open-source MARC21 Python module by Ed Summers, source code available at
@@ -24,9 +30,9 @@
  </dl>
  <h2>Websites</h2>
  <dl>
-  <dt><a href="http://bibframe.org">BIBFRAME.org</a></dt>
-  <dd>Official website of Library of Congress's LinkedData based Bibliographic Framework.</dd>
-
+  {% for website in resources.websites %}
+  {% include 'snippets/resource-brief.html' %}
+  {% endfor %}
  </dl>
 </div>
 {% endblock %}

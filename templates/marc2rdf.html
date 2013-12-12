@@ -1,52 +1,147 @@
-<section>
+<section style="background-color: black">
  <h1>Experiment #2</h1>
  <p class="lead">
-  Creating valid RDF from MARC
+  Creating valid RDF Tuples from MARC
  </p>
 </section>
 <section>
  <section>
-  <h2>RDF in XML</h2>
-  <p>We will be creating a simplified Dublin Core record of a MARC record expressed as RDF XML 
+  <h2>Generating Dublin Core and Schema.org Tuples</h2>
+  <p>We will be creating a simplified Dublin Core and a 
+     Schema.org graphs composed of subject, predicate, and 
+     objects tuples using the MARC21 and MARCXML record
+     and documents we created in Experiement 2. 
  </section>
- <section>
-  <h2>Task #1 -- Create RDF Document</h2>
-  {% raw %}
-  <pre>
+ {# RDF in XML Task 1 slide #}
+ <section class="task">
+   <h2>Task #1 -- Create RDF Tuple</h2>
+   <a class="btn btn-default" data-toggle="modal" data-target="#namespace-dlg">About Namespaces</a>
+   <pre>
     $ >> DCTERMS = Namespace("http://purl.org/dc/terms/")
+    $ >> BIBFRAME = Namespace("http://bibframe.org/vocab/")
+    $ >> SCHEMA_ORG = Namespace("http://schema.org/")
+    $ >> from rdflib import Graph, BNode, Literal
+    $ >> bib_graph = Graph() 
+    $ >> entities = Namespace('http://intro2libsys.info/2014/lita-linked-data-webinar/entities/')
+    $ >> entities.one
+    $ >> entity = entities.one
     $ >> etree.register_namespace('rdf', RDF)
     $ >> etree.register_namespace('dcterms', DCTERMS)
-    $ >> rdf_root = etree.Element("{{{0}}}RDF".format(RDF))
+    $ >> etree.register_namespace('bf', BIBFRAME)
+    $ >> etree.register_namespace('schema', SCHEMA_ORG)
+    {#
+   {% raw %}
+    $ >> rdf_root = etree.Element("{{{0}}}RDF".format(RDF))dd
     $ >> description = etree.SubElement(rdf_root, "{{{0}}}Description".format(RDF)) 
-  {% endraw %}
- 
-  </pre>
+   {% endraw %}
+    }#
+   </pre>
+   <p>Badge Assessment</p>
+   <ol>
+    <li>Create a second entity using the third MARCXML document</li>
+   </ol>
+ {# END RDF in XML Task 1 slide #}
  </section>
- <section>
-  <h2>Task #2 -- Extract and Add DC Title and Creator</h2>
-  {% raw %}
+ {# Namespace modal #}
+  <div class="modal fade" id="namespace-dlg">
+   <div class="modal-dialog">
+    <div class="modal-header"> 
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+     <h3 class="modal-title">Note about namespaces</h3>
+    </div>
+    <div class="modal-body">
+     <p>
+      A convention used in by both Python XML libraries is to represent XML 
+      namespaces in the following format <code>{namespace url}element name</code>,
+      so the following examples show:
+     </p>
+     <pre>
+      rdf_root = etree.Element("{'http://w3c.org/rdf'}RDF".format(RDF))
+      &lt;rdf:RDF rdf:xmlns='""'&gt;
+
+      &lt;/rdf:RDF&gt;
+     </pre>
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  {# END modal-dialog #}
+  </div>
+ {# End Namespace modal #}
+ </div>
+ <section class="task">
+  <h2>Task #2 -- Extract and Add DC Title and Creator Tuples</h2>
   <pre>
+    $ >>> bib_graph.add((entity, 
+    $ ...                DCTERMS.title, 
+    $ ...                Literal(marc_records[0].title())))
+    $ >>> bib_graph.add((entity, 
+    $ ...                DCTERMS.creator, 
+    $ ...                Literal(marc_records[0].author())))
+    $ >>> bib_graph.add((entity, 
+    $ ...                SCHEMA_ORG.name, 
+    $ ...                Literal(marc_records[0].title()))) 
+    $ >>> bib_graph.add((entity,
+    $ ...                SCHEMA_ORG.author,
+    $ ...                Literal(marc_records[0].author())))
+    {# 
     $ >> title = etree.SubElement(description, "{{{0}}}title".format(DCTERMS))
     $ >> title.text = marc_records[0].title()
     $ >> author = etree.SubElement(description, "{{{0}}}creator".format(DCTERMS))
     $ >> author.text = marc_records[0].author()
+
+    #}
   </pre>
- {% endraw %}
-  <p>Badge Questions</p>
+  <p>Badge Assessment</p>
   <ol>
-   <li>How would you add a &lt;dc:language&gt; element using information from the MARC record</li>
+   <li>How would you add a Dublin Core language tuple using information to the entity?</li>
+   <li>Using the second entity you created for the third MARCXML Document, add the title and
+       creator from that MARCXML Document to the bib_graph</li> 
+        
   </ol>
  </section>
+ <section class="task">
+  <h2>Task #3 -- Create HTML Template using MARC RDFa</h2>
+   <p>
+    For this task, we use a simplified version of 
+    <a href="http://www.w3.org/TR/rdfa-lite/">RDFa</a> to create a <a href="#">Jinja</a>
+    HTML template that can render an HTML snippet with data from our entity graph.
+   </p>
+   {% raw %}
+   <div class="well template-example">
+    &lt;div vocab="http://dublincore.org" type="{{ entity }}"&gt;<br>
+    &nbsp;&lt;h2 property="title"&gt;{{ entity.title }}&lt;/h2&gt;<br>
+    &nbsp;&nbsp;by &lt;span property="creator"&gt;{{ entity.creator }}&lt;/span&gt;<br>
+    &lt;/div&gt;
+   </div>
+   {% endraw %}
+ </section>
+ <section class="task">
+  <h2>Task #3 -- Continued</h2>
+   <p>Using a RDFa Template in Python</p>
+   <pre>
+    $ >>> from ji
 
-</section>
-<section>
- <section>
-  <h2>RDFa in HTML5</h2>
+   </pre>
+   <p>Badge Assessment</p>
+   <ol>
+    <li>Add the Dublin Core language triple to the RDFa template</li>
+   </ol> 
  </section>
- <section>
-  <h2>Task #1 -- Create HTML Doc</h2>
- </section>
- <section>
-  <h2>Task #2 -- C
+ <section class="task">
+  <h2>Task #5 -- Create Microdata using Knockout.js</h2>
+  <p>Using the datastructures we created in previous steps, we will
+     now use another template for MARC21 and MARCXML RDF tuples
+  </p>
+  <div class="well template-example">
+    &lt;div itemscope data-bind="attr: { itemtype: itemType }"&gt;<br>
+    &nbsp;&lt;h2 itemprop="name" data-bind="text: itemName"&gt;&lt;/h2&gt;<br>
+    &nbsp;&nbsp;by &lt;span property="creator"&gt;
+    &lt;/div&gt; 
+  </div>
+  <p>Badge Assessment</p>
+   <ol>
+    <li></li>
+   </ol>
  </section>
 </section>

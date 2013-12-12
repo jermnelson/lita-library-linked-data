@@ -1,6 +1,6 @@
-<section>
+<section  style="background-color: black">
   <h1>Experiment #1</h1>
-  <p class="lead">Extracting Data from MARC21 and MARCXML</p>
+  <p class="lead">Extracting Tuples from MARC21 and MARCXML</p>
 </section>
 <section>
   <section>
@@ -10,18 +10,19 @@
      combines both fixed-length and variable length fields. Fortunately a 
      number of open-source libraries exist for manipulating MARC21 records that
      hides some of the complexity behind the format.
-     Today we will use Ed Summer's <a href="#">PyMARC</a> module for coding
+     First we will use Ed Summer's <a href="#">PyMARC</a> module for coding
      experiment.
     </p>
   </section>
-  <section>
+  <section class="task">
    <h3>Task #1 -- Reading MARC21 file</h3>
    <pre>
     $ >> import pymarc
-    $ >> marc_reader = pymarc.MARCReader(open('E:\\training\\marc-sample.mrc'))
     $ >> marc_records = []
-    $ >> for record in marc_reader:
-    $ >>     marc_records.append(record)
+    $ >> with open('E:\\training\\marc-sample.mrc') as marc_file:
+    $ >>     marc_reader = pymarc.MARCReader(marc_file)
+    $ >>     for record in marc_reader:
+    $ >>         marc_records.append(record)
    </pre>
    <p class="lead">
      Badge Questions:
@@ -34,7 +35,7 @@
       </pre>
    </ol>
   </section>
-  <section>
+  <section class="task">
    <h3>Task #2 -- Retrieving Data</h3>
    <pre>
      $ >> print(marc_records[0].title())
@@ -59,7 +60,7 @@
        format serialized into XML. We will use a <a href="#">rdflib</a> and the standard Python 
        XML library to experiement with this format</p>
   </section>
-  <section>
+  <section class="task">
    <h3>Task #1 -- Parsing MARCXML</h3>
    {% raw %}
    <pre>
@@ -79,7 +80,7 @@
      </li>
    </ol>
   </section>
-  <section>
+  <section class="task">
    <h3>Task #2 -- Retrieving Data with XPath</h3>
    <p>
     Python's ElementTree implementation lacks complete XPath functionality so 
