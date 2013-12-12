@@ -4,3 +4,49 @@
   Creating valid RDF from MARC
  </p>
 </section>
+<section>
+ <section>
+  <h2>RDF in XML</h2>
+  <p>We will be creating a simplified Dublin Core record of a MARC record expressed as RDF XML 
+ </section>
+ <section>
+  <h2>Task #1 -- Create RDF Document</h2>
+  {% raw %}
+  <pre>
+    $ >> DCTERMS = Namespace("http://purl.org/dc/terms/")
+    $ >> etree.register_namespace('rdf', RDF)
+    $ >> etree.register_namespace('dcterms', DCTERMS)
+    $ >> rdf_root = etree.Element("{{{0}}}RDF".format(RDF))
+    $ >> description = etree.SubElement(rdf_root, "{{{0}}}Description".format(RDF)) 
+  {% endraw %}
+ 
+  </pre>
+ </section>
+ <section>
+  <h2>Task #2 -- Extract and Add DC Title and Creator</h2>
+  {% raw %}
+  <pre>
+    $ >> title = etree.SubElement(description, "{{{0}}}title".format(DCTERMS))
+    $ >> title.text = marc_records[0].title()
+    $ >> author = etree.SubElement(description, "{{{0}}}creator".format(DCTERMS))
+    $ >> author.text = marc_records[0].author()
+  </pre>
+ {% endraw %}
+  <p>Badge Questions</p>
+  <ol>
+   <li>How would you add a &lt;dc:language&gt; element using information from the MARC record</li>
+  </ol>
+ </section>
+
+</section>
+<section>
+ <section>
+  <h2>RDFa in HTML5</h2>
+ </section>
+ <section>
+  <h2>Task #1 -- Create HTML Doc</h2>
+ </section>
+ <section>
+  <h2>Task #2 -- C
+ </section>
+</section>
