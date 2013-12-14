@@ -6,11 +6,11 @@
 </section>
 <section>
  <section>
-  <h2>Generating Dublin Core and Schema.org Tuples</h2>
+  <h2>Generating Dublin Core and Schema.org Triples</h2>
   <p>We will be creating a simplified Dublin Core and a 
      Schema.org graphs composed of subject, predicate, and 
      objects tuples using the MARC21 and MARCXML record
-     and documents we created in Experiement 2. 
+     and documents we created in Experiment one. 
  </section>
  {# RDF in XML Task 1 slide #}
  <section class="task">
@@ -22,19 +22,19 @@
     $ >> SCHEMA_ORG = Namespace("http://schema.org/")
     $ >> from rdflib import Graph, BNode, Literal
     $ >> bib_graph = Graph() 
-    $ >> entities = Namespace('http://intro2libsys.info/2014/lita-linked-data-webinar/entities/')
+    $ >> entities = Namespace('http://intro2libsys.info/2014/lita-webinar/entities/')
     $ >> entities.one
     $ >> entity = entities.one
+   {#
     $ >> etree.register_namespace('rdf', RDF)
     $ >> etree.register_namespace('dcterms', DCTERMS)
     $ >> etree.register_namespace('bf', BIBFRAME)
     $ >> etree.register_namespace('schema', SCHEMA_ORG)
-    {#
    {% raw %}
     $ >> rdf_root = etree.Element("{{{0}}}RDF".format(RDF))dd
     $ >> description = etree.SubElement(rdf_root, "{{{0}}}Description".format(RDF)) 
    {% endraw %}
-    }#
+   #}
    </pre>
    <p>Badge Assessment</p>
    <ol>
@@ -78,18 +78,17 @@
     $ >>> bib_graph.add((entity, 
     $ ...                DCTERMS.creator, 
     $ ...                Literal(marc_records[0].author())))
+   {#
     $ >>> bib_graph.add((entity, 
     $ ...                SCHEMA_ORG.name, 
     $ ...                Literal(marc_records[0].title()))) 
     $ >>> bib_graph.add((entity,
     $ ...                SCHEMA_ORG.author,
-    $ ...                Literal(marc_records[0].author())))
-    {# 
+    $ ...                Literal(marc_records[0].author()))) 
     $ >> title = etree.SubElement(description, "{{{0}}}title".format(DCTERMS))
     $ >> title.text = marc_records[0].title()
     $ >> author = etree.SubElement(description, "{{{0}}}creator".format(DCTERMS))
     $ >> author.text = marc_records[0].author()
-
     #}
   </pre>
   <p>Badge Assessment</p>
@@ -111,7 +110,9 @@
    <div class="well template-example">
     &lt;div vocab="http://dublincore.org" type="{{ entity }}"&gt;<br>
     &nbsp;&lt;h2 property="title"&gt;{{ entity.title }}&lt;/h2&gt;<br>
-    &nbsp;&nbsp;by &lt;span property="creator"&gt;{{ entity.creator }}&lt;/span&gt;<br>
+    by {% for row in entity.creators %}<br>
+    &nbsp;&nbsp;&lt;span property="creator"&gt;{{ creator.name }}&lt;/span&gt;<br>
+    {% endfor %}<br>
     &lt;/div&gt;
    </div>
    {% endraw %}
@@ -120,17 +121,19 @@
   <h2>Task #3 -- Continued</h2>
    <p>Using a RDFa Template in Python</p>
    <pre>
-    $ >>> from ji
-
+    $ >>> from jinja2 import Template
+    $ >>> rdfa_template = Template('E:\webinar-workspace\templates\rdfa.html')
+    $ >>> print(rdfa_template.render(entity=entity)
    </pre>
    <p>Badge Assessment</p>
    <ol>
     <li>Add the Dublin Core language triple to the RDFa template</li>
+    <li></li>
    </ol> 
  </section>
  <section class="task">
-  <h2>Task #5 -- Create Microdata using Knockout.js</h2>
-  <p>Using the datastructures we created in previous steps, we will
+  <h2>Task #4 -- Create Microdata using Knockout.js</h2>
+  <p>Using the data-structures we created in previous steps, we will
      now use another template for MARC21 and MARCXML RDF tuples
   </p>
   <div class="well template-example">
