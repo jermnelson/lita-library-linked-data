@@ -25,7 +25,7 @@
     $ >>         marc_records.append(record)
    </pre>
    <p class="lead">
-     Badge Questions:
+     Badge Assessment:
    </p>
    <ol>
      <li>How many MARC records are in the list <code>marc_records</code>?</li>
@@ -44,7 +44,7 @@
      $ >> '256 $a|Pride and Prejudice'
    </pre>
    <p class="lead">
-    Badge Questions:
+    Badge Assessment:
    </p>
    <ol>
     <li>What is the title for record 6 in <code>marc_records</code>?
@@ -57,7 +57,7 @@
   <section>
     <h2>MARCXML</h2>
     <p>MARCXML is a framework developed by the Library of Congress to work with MARC21 data 
-       format serialized into XML. We will use a <a href="#">rdflib</a> and the standard Python 
+       format serialized into XML. We will use a <a href="{{ url_for('resources') }}#rdflib">rdflib</a> and the standard Python 
        XML library to experiement with this format</p>
   </section>
   <section class="task">
@@ -65,14 +65,14 @@
    {% raw %}
    <pre>
      $ >> from rdflib import Namespace
-     $ >> import xml.etree.ElementTree as etree
+     $ >> from lxml import etree
      $ >> marc_ns = Namespace('http://www.loc.gov/MARC21/slim')
      $ >> marc_xml = etree.parse('E:\\training\\marc-sample.xml')
      $ >> marc_records = marc_xml.findall('/{{{0}}}record'.format(marc_ns))
    </pre>
    {% endraw %}
    <p class="lead">
-     Badge Questions:
+     Badge Assessment:
    </p>
    <ol>
      <li>How many <code>&lt;marc:record&gt;...&lt;/marc:record&gt;</code> elements are in 
@@ -85,18 +85,17 @@
    <p>
     Python's ElementTree implementation lacks complete XPath functionality so 
     we will use a more full-featured XML parser for Python called 
-    <a href="http://lxml.de/">lxml</a>.  
+    <a href="{{ url_for('resources') }}#lxml">lxml</a>.  
    </p>
 {% raw %}
    <pre>
-     $ >> from lxml import etree
-     $ >> marc_xml = etree.parse('E:\\training\\marc-sample.xml')
      $ >> xpath_string = "/{{{0}}}record/{{{0}}}datafield[@tag='245']/".format(marc_ns)
-     $ >> title_fields = marc_xml.findall(xpath_string)
+     $ >> title_elements = marc_xml.findall(xpath_string)
+     $ >> print(title_elements[0].text)
    </pre>
 {% endraw %}
     <p class="lead">
-     Badge Questions:
+     Badge Assessment:
    </p>
    <ol>
     <li>How could you improve the XPath {% raw %}<pre> "/{{{0}}}record/{{{0}}}datafield[@tag='245']/"</pre>{% endraw %}

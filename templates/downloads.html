@@ -1,0 +1,36 @@
+{% extends 'other.html' %}
+
+{% block main %}
+<div class="container">
+  <h1>Downloads</h1>
+  <h2>Python Environments</h2>
+  <p>
+   To assist in you in efforts to explore Linked Data and MARC records,
+   a download of the programming environment used in this webinar is 
+   available for <a href="#windows">Microsoft Windows</a>, 
+   <a href="#mac">Apple Macintosh</a>, and <a href="#linux">Ubuntu Linux</a>.
+  </p>
+  <h3><a name="windows"></a>Microsoft Windows</h3>
+  <p>
+   <a class="btn btn-default btn-lg" href="{{ url_for('static', filename='downloads/win32-lita-python-env.zip') }}">
+     <span class="glyphicon glyphicon-download"></span></a> 
+   A complete Python environment created using <a href="#">Portable Python</a> that 
+   includes all of the necessary modules (<a href="{{ url_for('resources') }}#lxml">lxml</a>,
+   <a href="{{ url_for('resources') }}#pymarc">pymarc</a>, and
+   <a href="{{ url_for('resources') }}#rdflib">rdflib</a>).
+
+  </p>
+  <h3><a name="mac"></a>Apple Macintosh</h3>
+  <h3><a name="linux"></a>Ubuntu Linux</h3>
+  <h2>MARC21 and MARCXML Samples</h2>
+  <p>
+   The coding experiments illustrated in this webinar use both MARC21 and MARCXML
+   records. Regardless of your python environment, you'll need to download and 
+   unzip the following files:
+  </p>
+  <ul>
+   <li><a href="#">MARC21-samples.zip</a></li>
+   <li><a href="#">MARCXML-samples.zip</a></li>
+  </ul>
+</div>
+{% endblock %} 

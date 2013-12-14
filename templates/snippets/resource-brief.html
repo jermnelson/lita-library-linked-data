@@ -1,5 +1,5 @@
   <dt><a name="{{ website.name }}" href="{{ website.url }}">{{ website.headline }}</a>
-      <a href="{{ url_for('static', filename='js/{{ website.name }}.json') }}">
-       <img src="{{ url_for('static', filename='img/json-ld-data-24.png') }}"></a>
+      <a href="/resources/{{ website.name }}.json">
+       <img src="{{ url_for('static', filename='img/json-ld-data-24.png')}}"></a>
   </dt>
-  <dd>{{ website.description }} </dd>
+  <dd>{{ website.description }}</dd>
