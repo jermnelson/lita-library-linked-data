@@ -7,7 +7,7 @@
   <h2>Expected Outcomes for this Webinar</h2>
   <p>In this webinar we will be using the <a href="{{ url_for('resources') }}#python">Python</a>
    and <a href="{{ url_for('resources') }}#javascript">Javascript</a> programming languages to 
-   manipulate <a href="{{ url_for('resources') }}#marc21">MARC21</a> and
+   manipulate <a href="{{ url_for('resources') }}#marc-bibliographic">MARC21</a> and
    <a href="{{ url_for('resources') }}#marcxml">MARCXML</a> into 
    <a href="{{ url_for('resources') }}#bibframe">BIBFRAME</a>, 
    <a href="{{ url_for('resources') }}#dublin-core">Dublin Core</a>, and 
@@ -50,18 +50,18 @@
     <h3>Schemas</h3>
     <ul>
       <li>
-       <a href="http://schema.org/">Schema.org</a> with extension efforts by
-       <a href="http://www.w3.org/community/schemabibex/wiki/Main_Page">Schema Bib 
+       <a href="{{ url_for('resources') }}#schema-org">Schema.org</a> with extension efforts by
+       <a href="{{ url_for('resources') }}#schema-bib-extend-community-group">Schema Bib 
        Extend Community Group</a>
       </li>
       <li>
-       <a href="http://dublincore.org/">Dublin Core Metadata Initiative</a>
+       <a href="{{ url_for('resources') }}#dublin-core">Dublin Core Metadata Initiative</a>
       </li>
       <li>
-       <a href="http://bibframe.org/">BIBFRAME</a>
+       <a href="{{ url_for('resources') }}#bibframe">BIBFRAME</a>
       </li>
       <li>
-       <a href="http://www.loc.gov/standards/mods/">MODS (Metadata Object Description Schema)</a>
+       <a href="{{ url_for('resources') }}#mods">MODS (Metadata Object Description Schema)</a>
       </li>
     </ul>
   </section>
@@ -69,9 +69,9 @@
     <h3>Formats</h3>
     <ul>
      <li>
-       <a href="http://loc.gov/marc/">MARC Standards</a>
+       <a href="{{ url_for('resources') }}#marc/">MARC Standards</a>
        <ul>
-        <li><a href="http://www.loc.gov/marc/bibliographic/ecbdhome.html">Bibliographic data</a></li>
+        <li><a href="{{ url_for('resources') }}#marc-bibliographic">Bibliographic data</a></li>
         <li><a href="http://www.loc.gov/marc/authority/ecadhome.html">Authority data</a></li>
      </li>
     </ul>

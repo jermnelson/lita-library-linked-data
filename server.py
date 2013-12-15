@@ -49,7 +49,12 @@ load_resources('software',
 
 load_resources('websites',
                ['bibframe',
+                'dublin-core',
+                'marc',
+                'marc-bibliographic',
+                'mods',
                 'rdfa-lite',
+                'schema-bib-extend-community-group',
                 'schema-org'])
 
 @app.route('{0}/badge'.format(URL_PREFIX))
