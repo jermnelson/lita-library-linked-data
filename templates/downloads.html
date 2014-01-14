@@ -3,34 +3,51 @@
 {% block main %}
 <div class="container">
   <h1>Downloads</h1>
-  <h2>Python Environments</h2>
   <p>
-   To assist in you in efforts to explore Linked Data and MARC records,
-   a download of the programming environment used in this webinar is 
-   available for <a href="#windows">Microsoft Windows</a>, 
-   <a href="#mac">Apple Macintosh</a>, and <a href="#linux">Ubuntu Linux</a>.
+   All source code and the webinar's IPython Notebook is available on github at 
+   <a href="https://github.com/jermnelson/lita-library-linked-data">https://github.com/jermnelson/lita-library-linked-data</a>. 
+   To download all of the MARC record samples and the IPython Notebook, you can download and extract a zip file of the 
+   repository <a href="https://github.com/jermnelson/lita-library-linked-data/archive/master.zip">here</a>.
   </p>
-  <h3><a name="windows"></a>Microsoft Windows</h3>
+  <h2>IPython Notebook</h2>
   <p>
-   <a class="btn btn-default btn-lg" href="{{ url_for('static', filename='downloads/win32-lita-python-env.zip') }}">
-     <span class="glyphicon glyphicon-download"></span></a> 
-   A complete Python environment created using <a href="#">Portable Python</a> that 
-   includes all of the necessary modules (<a href="{{ url_for('resources') }}#lxml">lxml</a>,
-   <a href="{{ url_for('resources') }}#pymarc">pymarc</a>, and
-   <a href="{{ url_for('resources') }}#rdflib">rdflib</a>).
-
+   To earn your Open Badge follow the directions on the <a href="http://ipython.org/install.html">IPython installation page</a>
+   to get a working IPython environment. I also recommend you download/install a version of the 
+   <a href="">pip</a>, the Python package installer by downloading 
+   <a href="https://raw.github.com/pypa/pip/master/contrib/get-pip.py">get-pip.py</a> and then running the following 
+    from your command-line where you downloaded the <em>get-pip.py</em> file:
   </p>
-  <h3><a name="mac"></a>Apple Macintosh</h3>
-  <h3><a name="linux"></a>Ubuntu Linux</h3>
+  <pre>python get-pip.py</pre>
+  <p>
+   After installing pip, you should be able to install the remaining modules by entering the following commands:
+  </p>
+  <p class="alert alert-danger"><strong>NOTE for Microsoft Windows!</strong> First install <a href="http://lxml.de/">lxml</a> from this
+   list of <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#lxml">windows installers</a>. You'll receive an error
+   if you try to install <em>lxml</em> with pip  
+  </p> 
+  <pre>
+    pip install jinja
+    pip install pymarc
+    pip install rdflib
+  </pre>
+  <h3>Macintosh &amp; Linux ONLY!</h3>
+  <pre>
+    pip install lxml
+  </pre>
   <h2>MARC21 and MARCXML Samples</h2>
   <p>
    The coding experiments illustrated in this webinar use both MARC21 and MARCXML
-   records. Regardless of your python environment, you'll need to download and 
-   unzip the following files:
+   records. Download and 
+   unzip the following files (right-mouse click and "Save Link as.." to a directory on 
+   your computer) 
   </p>
   <ul>
-   <li><a href="#">MARC21-samples.zip</a></li>
-   <li><a href="#">MARCXML-samples.zip</a></li>
+   <li><a href="https://github.com/jermnelson/lita-library-linked-data/raw/master/static/marc/marc-sample.mrc">marc-sample.mrc</a>
+    Collection of close to 10,000 MARC21 records from Colorado College's collection.
+   </li>
+   <li><a href="https://github.com/jermnelson/lita-library-linked-data/raw/master/static/marc/marc-sample.xml">marc-sample.xml</a>
+    Collection of MARC XML records derived from <code>marc-sample.mrc</code>.
+   </li>
   </ul>
 </div>
 {% endblock %} 

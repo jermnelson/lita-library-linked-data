@@ -13,9 +13,9 @@
           <a href="http://www.coloradocollege.edu/library">Tutt Library, Colorado College</a></small>
   </p>
   <div class="btn-group">
-   <button onclick="window.location.href='/resources'" class="btn btn-default btn-lg">Resources</button>
-   <button onclick="window.location.href='/badge'" class="btn btn-default btn-lg">Open Badge</a>
-   <button onclick="window.location.href='/downloads'" class="btn btn-default btn-lg">Downloads</a>
+   <button onclick="window.location.href='{{ url_for('resources') }}'" class="btn btn-default btn-lg">Resources</button>
+   <button onclick="window.location.href='{{ url_for('badge') }}'" class="btn btn-default btn-lg">Open Badge</a>
+   <button onclick="window.location.href='{{ url_for('downloads') }}'" class="btn btn-default btn-lg">Downloads</a>
 
   </div>
 </section>

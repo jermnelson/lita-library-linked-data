@@ -1,33 +1,56 @@
 {% extends 'other.html' %}
 
+{% block more_css %}
+ .display-open-badge {
+   display: block;
+   float: left;
+   height: 80px;
+   width: 300px;
+   background-image: url({{ url_for('static', filename="img/open-badge-logo.png") }});
+   background-repeat: no-repeat;
+   background-position: 0px 0px;
+ }
+{% endblock %}
+
 {% block main %}
 <div class="container">
 <h1>Earn your Open Badge</h1> 
-<p>
-<img class="img-thumbnail" 
-     src="{{ url_for('static', filename="img/bronze-badge-template.png") }}"
-     style="height:145px;width:auto;float:left">
-
+<p >
+<a href="http://openbadges.org"><span class="display-open-badge"></span></a>
  Upon completion of this webinar, you have the opportunity to earn either
- a Gold, Silver, or Bronze Badge indicating your competence and familiarity 
+ a Gold, Silver, or Bronze <a href="http://openbadges.org/">Open Badge</a> indicating your competency and familiarity 
  with using Linked Data with MARC records. By registering and
  attending this webinar you automatically earned your Bronze Badge that you can
  receive by sending an email to 
- <a href="mailto:jeremy.nelson@coloradocollege.edu">Jeremy Nelson</a>.
+ <a href="mailto:jeremy.nelson@coloradocollege.edu">Jeremy Nelson</a> and creating an 
+ <a href="http://backpack.openbadges.org/backpack/login">Mozilla Open Badge Backpack</a> Account.
 </p>
 <h2>Earning your Silver or Gold Badge</h2>
 <p>
- You need to answer correctly 60% of the badge assessments in the presentation for a silver.
- To earn a Gold Badge you need to answer correctly 87% of the badge assessments.
+ You need to answer correctly 60% of the badge assessments for a silver.
+ To earn a Gold Badge you need to answer correctly 87% of the badge assessments. All badge assessments
+ are in the webinar's IPython notebook, url down below.
 </p> 
 <h3>Software Prerequisites</h3>
 <p>
- Please install <a href="http://ipython.org/install.html">iPython</a> on your computer.
+ Please see directions on the <a href="{{ url_for('downloads') }}">downloads</a> page.
  </p>
-<p> If you wish to earn a Silver Badge or Gold Badge, follow these steps</.>you need to copy the webinar's
- <a href="https://github.com/jermnelson/lita-library-linked-data/blob/master/LITALinkedData.ipynb">IPython notebook</a>
- to a local directory on your computer. 
- run the examples and answer all of the questions in you own copy. To ear in the presentation.
+<h3>Step-by-Step</h3>
+<p> If you wish to earn a Silver Badge or Gold Badge, follow these steps
+ <ol>
+  <li>Visit the <a href="{{ url_for('downloads') }}">downloads</a> and install IPython and dependencies.</li> 
+  <li>Create an <a href="http://backpack.openbadges.org/backpack/login">Mozilla Open Badge Backpack</a> Account</li>
+  <li>Copy the webinar's
+   <a href="https://github.com/jermnelson/lita-library-linked-data/blob/master/LITALinkedData.ipynb">IPython notebook</a>
+   to a local directory on your computer. 
+  </li>
+  <li>Run the examples and answer all of the questions in you own copy of the notebook.</li>
+  <li>After you have entered all of you answers, save the 
+   notebook and then email it as an attachment to <a href="mailto:jeremy.nelson@coloradocollege.edu">Jeremy Nelson</a> who will grade your notebook
+   and email you a link to your badge and your graded IPython notebook. 
+  </li>
+  <li>Click on link which will register your badge in your Open Badge Backpack</li>
+ </ol>
 </p>
 </div>
 <div class="container">
@@ -56,20 +79,5 @@
   </div>
  </div>
  <hr>
- {# START registration #}
- <div class="row">
-  <a name="register"></a>
-  <div class="col-md-8 col-md-offset-2">
-   <div class="panel panel-primary">
-    <div class="panel-heading">
-     <h3 class="panel-title">Register Now!</h3>
-    </div>
-    <div class="panel-body">
-    
-
-    </div>
-  </div>
- {# END registration #}
- </div>
 </div>
 {% endblock %}
