@@ -24,16 +24,21 @@ __license__ = 'GPL v2'
 __copyright__ = '(c) 2013, 2014 by Jeremy Nelson'
 
 import datetime
+import hashlib
 import json
 import os
 import sys
+import urllib2
 import uuid
 from flask import Flask, g, jsonify, redirect, render_template
-from flask import abort, url_for
+from flask import abort, Response, url_for
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 URL_PREFIX = '/lita-webinar-2014'
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='/lita-webinar-2014/static')
 
 RESOURCES = {'articles_books': [],
              'software': [],
@@ -89,15 +94,13 @@ def badge_class(metal):
     return jsonify({
         "name": "Coding Experiments with MARC and Linked Data {0} Badge".format(
         metal.title()),
-        "description": """This {0} badge is for the LITA Linked Data Webinar Series -
-Coding Experiments with MARC and Linked Data by Jeremy Nelson on 14 January
-2014.""".format(metal),
-        "image": "http://intro2libys.info{0}".format(
-            url_for('static', filename="{0}-badge-template.png".format(metal))),
-        "criteria": "http://intro2libys.info{0}".format(
+        "description": """This {0} badge is for the LITA Linked Data Webinar Series - Coding Experiments with MARC and Linked Data by Jeremy Nelson on 14 January 2014.""".format(metal),
+        "image": "http://intro2libsys.info{0}".format(
+            url_for('static', filename="img/{0}-badge-template.png".format(metal))),
+        "criteria": "http://intro2libsys.info{0}".format(
             url_for('badge')),
         "tags": ["LITA", "Libraries", "Linked Data", "MARC"],
-        "issuer": "http://intro2libsy.info{0}".format(
+        "issuer": "http://intro2libsys.info{0}".format(
             url_for('badge_issuer_org'))})
 
 @app.route('{0}/badge-issuer-organization.json'.format(URL_PREFIX))
@@ -115,31 +118,40 @@ def badge_revoked():
 
 @app.route("{0}/<uid>-coding-marc-linked-data-badge.json".format(URL_PREFIX))
 def badge_for_participant(uid):
-    participant_badge_location = os.path.join('badges', '{0}.json'.format(uid))
+    participant_badge_location = os.path.join(PROJECT_ROOT,
+                                              'badges', 
+                                              '{0}.json'.format(uid))
     if os.path.exists(participant_badge_location):
-        participant_badge = json.load(open(badge_for_participant, 'rb'))
-        return jsonfiy(participant_badge)
+        participant_badge = json.load(open(participant_badge_location, 'rb'))
+        if os.path.exists(os.path.join(PROJECT_ROOT, 
+                                       'badges', 
+                                       'img', '{0}.png'.format(uid))):
+            participant_badge['image'] = "http://intro2libsys.info{0}/{1}-coding-marc-linked-data-badge.png".format(
+              URL_PREFIX,
+              uid)
+        return jsonify(participant_badge)
     else:
         abort(404)
 
 @app.route("{0}/<uid>-coding-marc-linked-data-badge.png".format(URL_PREFIX))
 def badge_image_for_participant(uid):
-    participant_img_location = os.path.join('badges',
+    participant_img_location = os.path.join(PROJECT_ROOT,
+                                            'badges',
                                             'img',
                                             '{0}.png'.format(uid))
     if os.path.exists(participant_img_location):
         img = None
         with open(participant_img_location, 'rb') as img_file:
             img = img_file.read()
-        return Request(img, mimetype='image/png')
+        return Response(img, mimetype='image/png')
     else:
         abort(404)
 
 def bake_badge(**kwargs):
     assert_url = kwargs.get('url')
     try:
-        baking_service = urllib2.urlopen(
-            'http://beta.openbadges.org/baker?assertion={0}'.format(assert_url))
+        badge_url = 'http://beta.openbadges.org/baker?assertion={0}'.format(assert_url)
+        baking_service = urllib2.urlopen(badge_url)
         raw_image = baking_service.read()
         return raw_image
     except:
@@ -150,22 +162,23 @@ def issue_badge(**kwargs):
     identity_hash = hashlib.sha256(kwargs.get("email"))
     identity_hash.update(IDENTITY_SALT)
     uid = str(uuid.uuid4()).split("-")[0]
+    uid_url = "http://intro2libsys.info{0}/{1}-coding-marc-linked-data-badge.json".format(
+       URL_PREFIX,
+       uid)
     badge_json = {
-        'badge': "http://intro2libys.info{0}".format(
-            url_for('badge_class', metal=kwargs.get('metal'))),
-        'issuedOn': kwargs.get('issuedOne', datetime.now().isoformat()),
+        'badge': "http://intro2libsys.info{0}/coding-marc-linked-data-{1}-badge.json".format(
+            URL_PREFIX,
+            kwargs.get('metal')),
+        'issuedOn': kwargs.get('issuedOne', datetime.datetime.now().isoformat()),
         'recipient': {
-            'type': kwargs.get("email"),
+            'type': "email",
             'hashed': True,
             'salt': IDENTITY_SALT,
             'identity': "sha256${0}".format(
                 identity_hash.hexdigest())},
         'verify': {
             'type': 'hosted',
-            'url': "http://intro2libsys.info{0}/"\
-            "{1}-coding-marc-linked-data-badge.json".format(
-                URL_PREFIX,
-                uid)},
+            'url': uid_url},
         'uid': uid
         }
     # Save badge to badges directory
@@ -173,8 +186,7 @@ def issue_badge(**kwargs):
               open(os.path.join('badges', '{0}.json'.format(uid)), 'wb'),
               indent=2,
               sort_keys=True)
-    raw_badge_img = bake_badge(url=url_for('badge_for_participant',
-                                           uid=uid))
+    raw_badge_img = bake_badge(url=uid_url)
     if raw_badge_img:
         with open(os.path.join('badges', 'img', '{0}.png'.format(uid)), 'wb') as img_file:
             img_file.write(raw_badge_img)
