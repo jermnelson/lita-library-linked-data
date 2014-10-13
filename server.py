@@ -28,14 +28,18 @@ import hashlib
 import json
 import os
 import sys
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import uuid
 from flask import Flask, g, jsonify, redirect, render_template
 from flask import abort, Response, url_for
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-URL_PREFIX = '/lita-webinar-2014'
+#URL_PREFIX = '/lita-webinar-2014'
+URL_PREFIX = ''
 
 app = Flask(__name__,
             static_url_path='/lita-webinar-2014/static')
@@ -57,8 +61,8 @@ def load_resources(section, names):
     for name in names:
         RESOURCES[section].append(
             json.load(
-                open(
-                    os.path.join('static',
+                open(os.path.join(PROJECT_ROOT,
+                                 'static',
                                  'js',
                                  '{0}.json'.format(name)))))
 
@@ -105,6 +109,7 @@ def badge_class(metal):
 
 @app.route('{0}/badge-issuer-organization.json'.format(URL_PREFIX))
 def badge_issuer_org():
+    print("IN LITA badge issuer")
     return jsonify(
         {"name": "intro2libsys.info LLC",
          "url": "http://intro2libsys.info",
@@ -127,7 +132,7 @@ def badge_for_participant(uid):
                                        'badges', 
                                        'img', '{0}.png'.format(uid))):
             participant_badge['image'] = "http://intro2libsys.info{0}/{1}-coding-marc-linked-data-badge.png".format(
-              URL_PREFIX,
+              '/lita-webinar-2014',
               uid)
         return jsonify(participant_badge)
     else:
@@ -163,12 +168,12 @@ def issue_badge(**kwargs):
     identity_hash.update(IDENTITY_SALT)
     uid = str(uuid.uuid4()).split("-")[0]
     uid_url = "http://intro2libsys.info{0}/{1}-coding-marc-linked-data-badge.json".format(
-       URL_PREFIX,
+       '/lita-webinar-2014',
        uid)
     badge_json = {
         'badge': "http://intro2libsys.info{0}/coding-marc-linked-data-{1}-badge.json".format(
-            URL_PREFIX,
-            kwargs.get('metal')),
+         '/lita-webinar-2014',
+         kwargs.get('metal')),
         'issuedOn': kwargs.get('issuedOne', datetime.datetime.now().isoformat()),
         'recipient': {
             'type': "email",
@@ -202,7 +207,8 @@ def badge():
 def downloads():
     return render_template('downloads.html')
 
-@app.route('{0}/'.format(URL_PREFIX))
+#@app.route('{0}/'.format(URL_PREFIX))a
+@app.route("/")
 def home():
     return render_template('index.html')
 
